@@ -35,6 +35,9 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
     steps:
     - uses: actions/checkout@v2
+    - name: Terraform_Plan
+      working-directory: ./infrastructure
+      run: make run_plan       
     - name: Terraform_Apply
       working-directory: ./infrastructure
       run: make run_apply  
