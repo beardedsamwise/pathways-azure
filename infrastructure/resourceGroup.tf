@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "this" {
-  name     = "weatherapp"
+  name     = "weather-app"
   location = "Australia East"
 }
