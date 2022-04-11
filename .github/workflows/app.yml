@@ -20,43 +20,25 @@ jobs:
         working-directory: ./application
         run: make login
         env:
-          ACCOUNTID: ${{ secrets.ACCOUNTID }}
-          AWSREGION: ${{ secrets.AWSREGION }}
-          REPONAME: ${{ secrets.REPONAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN:  ${{ secrets.AWS_SESSION_TOKEN }} 
+          ACR_URL: ${{ secrets.ACR_URL }}
+          ACR_USER: ${{ secrets.ACR_USER }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build weather-app image
         working-directory: ./application
         env:
-          ACCOUNTID: ${{ secrets.ACCOUNTID }}
-          AWSREGION: ${{ secrets.AWSREGION }}
-          REPONAME: ${{ secrets.REPONAME }}
+          ACR_URL: ${{ secrets.ACR_URL }}
+          ACR_USER: ${{ secrets.ACR_USER }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
         run: make build
 
       - name: Push weather-app image to ECR
         working-directory: ./application
         env:
-          ACCOUNTID: ${{ secrets.ACCOUNTID }}
-          AWSREGION: ${{ secrets.AWSREGION }}
-          REPONAME: ${{ secrets.REPONAME }}
+          ACR_URL: ${{ secrets.ACR_URL }}
+          ACR_USER: ${{ secrets.ACR_USER }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
         run: make push
-  post_to_slack:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Post to a Slack channel
-      id: slack
-      uses: slackapi/slack-github-action@v1.18.0
-      with:
-      # Slack channel id, channel name, or user id to post message.
-      # See also: https://api.slack.com/methods/chat.postMessage#channels
-        channel-id: 'C035G62LAUU'
-        # For posting a simple plain text message
-        slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
 
 
