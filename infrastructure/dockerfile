@@ -1,0 +1,19 @@
+FROM amd64/ubuntu:20.04 as tf
+
+RUN apt update -y && \
+    apt install unzip -y && \
+    apt install wget -y && \
+    apt install curl -y && \
+    apt install sudo -y && \
+    apt install ca-certificates -y
+
+RUN wget https://releases.hashicorp.com/terraform/1.1.8/terraform_1.1.8_linux_amd64.zip && \
+    unzip terraform_1.1.8_linux_amd64.zip && \
+    mv terraform /usr/local/bin/ && \
+    terraform --version 
+
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# set default home directory for root.
+#ENV HOME /home/terraform
+
