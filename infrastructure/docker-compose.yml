@@ -2,7 +2,7 @@ version: '3'
 services:
   tf:
     build: ./
-    image: contino/terraform
+    image: amd64/ubuntu:20.04
     volumes:
       - type: bind
         source: .
