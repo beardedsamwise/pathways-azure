@@ -13,7 +13,7 @@ build:
 
 .PHONY: login
 login:
-	echo $ACR_PASSWORD | docker login --username beardedweatherapp --password-stdin $()
+	echo $(ACR_PASSWORD) | docker login --username beardedweatherapp --password-stdin $(ACR_URL)
 
 .PHONY: push
 push:
