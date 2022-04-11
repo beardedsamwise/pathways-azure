@@ -38,11 +38,5 @@ destroy_plan:
 destroy_apply:
 	$(COMPOSE_RUN_TERRAFORM) destroy -auto-approve
 
-.PHONY: list_bucket
-list_bucket: 
-	$(COMPOSE_RUN_AWS) s3 ls
 
-.PHONY: test
-test:
-	docker-compose run tf printenv
-	#docker-compose run tf az storage account list
+
