@@ -14,6 +14,5 @@ RUN wget https://releases.hashicorp.com/terraform/1.1.8/terraform_1.1.8_linux_am
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-# set default home directory for root.
-#ENV HOME /home/terraform
+RUN apt install docker.io -y
 
