@@ -39,10 +39,8 @@ jobs:
     - name: Terraform_Plan
       working-directory: ./infrastructure
       run: make run_plan
-    - name: Log in to ECR
-      working-directory: ./application
-      run: make login       
     - name: Terraform_Apply
       working-directory: ./infrastructure
-      run: make run_apply  
+      run: make login   
+           make run_apply
 
