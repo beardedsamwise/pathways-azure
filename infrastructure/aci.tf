@@ -6,14 +6,20 @@ resource "azurerm_container_group" "app" {
   dns_name_label      = "beardedweatherapp"
   os_type             = "Linux"
 
+  image_registry_credential {
+    username ="beardedweatherapp"
+    password = var.acr_password
+    server = "beardedweatherapp.azurecr.io"
+  }
+
   container {
     name   = "weatherapp"
-    image  = "beardedweatherapp.azurecr.io/weatherapp:latest"
+    image  = "beardedweatherapp.azurecr.io/weatherapp"
     cpu    = "0.5"
     memory = "1.5"
 
     ports {
-      port     = 80
+      port     = 3000
       protocol = "TCP"
     }
   }

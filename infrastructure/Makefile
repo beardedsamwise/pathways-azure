@@ -1,8 +1,5 @@
 COMPOSE_RUN_TERRAFORM = docker-compose run tf terraform
 COMPOSE_RUN_BASH = docker-compose run tf
-export ACR_URL
-export ACR_USER
-export ACR_PASSWORD
 
 .PHONY: run_plan
 run_plan: init plan
@@ -23,8 +20,8 @@ version:
 .PHONY: init
 init:
 	$(COMPOSE_RUN_TERRAFORM) init -input=false
-	-$(COMPOSE_RUN_TERRAFORM) validate
-	-$(COMPOSE_RUN_TERRAFORM) fmt
+	$(COMPOSE_RUN_TERRAFORM) validate
+	$(COMPOSE_RUN_TERRAFORM) fmt
 
 .PHONY: plan
 plan:
@@ -32,7 +29,7 @@ plan:
 
 .PHONY: apply
 apply:
-	$(COMPOSE_RUN_TERRAFORM) apply "tfplan"
+	@$(COMPOSE_RUN_TERRAFORM) apply "tfplan""
 
 .PHONY: destroy_plan
 destroy_plan:
@@ -41,9 +38,3 @@ destroy_plan:
 .PHONY: destroy_apply
 destroy_apply:
 	$(COMPOSE_RUN_TERRAFORM) destroy -auto-approve
-
-.PHONY: login
-login:
-	@$(COMPOSE_RUN_BASH) echo $(ACR_PASSWORD) | docker login --username beardedweatherapp --password-stdin $(ACR_URL)
-
-
