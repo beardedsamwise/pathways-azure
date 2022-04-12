@@ -1,4 +1,7 @@
 COMPOSE_RUN_TERRAFORM = docker-compose run tf terraform
+export ACR_URL
+export ACR_USER
+export ACR_PASSWORD
 
 .PHONY: run_plan
 run_plan: init plan
@@ -38,5 +41,8 @@ destroy_plan:
 destroy_apply:
 	$(COMPOSE_RUN_TERRAFORM) destroy -auto-approve
 
+.PHONY: login
+login:
+	echo $(ACR_PASSWORD) | docker login --username beardedweatherapp --password-stdin $(ACR_URL)
 
 

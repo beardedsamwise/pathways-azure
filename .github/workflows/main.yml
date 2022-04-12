@@ -10,7 +10,6 @@ on:
 jobs:
   terraform_plan:
     runs-on: ubuntu-latest
-    
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -26,18 +25,24 @@ jobs:
     environment:
       name: approval
     needs: terraform_plan
-    continue-on-error: true
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ACR_URL: ${{ secrets.ACR_URL }}
+      ACR_USER: ${{ secrets.ACR_USER }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
     steps:
     - uses: actions/checkout@v2
     - name: Terraform_Plan
       working-directory: ./infrastructure
-      run: make run_plan       
+      run: make run_plan
+    - name: Log in to ECR
+      working-directory: ./application
+      run: make login       
     - name: Terraform_Apply
       working-directory: ./infrastructure
       run: make run_apply  
+
