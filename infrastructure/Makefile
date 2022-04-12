@@ -1,5 +1,6 @@
 COMPOSE_RUN_TERRAFORM = docker-compose run tf terraform
 COMPOSE_RUN_BASH = docker-compose run tf
+#export TF_VAR_acr_password
 
 .PHONY: run_plan
 run_plan: init plan
@@ -29,7 +30,7 @@ plan:
 
 .PHONY: apply
 apply:
-	@$(COMPOSE_RUN_TERRAFORM) apply "tfplan""
+	@$(COMPOSE_RUN_TERRAFORM) apply "tfplan"
 
 .PHONY: destroy_plan
 destroy_plan:
@@ -38,3 +39,7 @@ destroy_plan:
 .PHONY: destroy_apply
 destroy_apply:
 	$(COMPOSE_RUN_TERRAFORM) destroy -auto-approve
+
+# .PHONY: test
+# test:
+# 	$(COMPOSE_RUN_BASH) bash -c "echo $$TF_VAR_acr_password"

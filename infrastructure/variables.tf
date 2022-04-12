@@ -1,4 +1,4 @@
 variable "acr_password" {
-  type = string
+  type      = string
   sensitive = true
 }

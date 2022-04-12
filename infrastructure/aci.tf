@@ -7,9 +7,9 @@ resource "azurerm_container_group" "app" {
   os_type             = "Linux"
 
   image_registry_credential {
-    username ="beardedweatherapp"
+    username = "beardedweatherapp"
     password = var.acr_password
-    server = "beardedweatherapp.azurecr.io"
+    server   = "beardedweatherapp.azurecr.io"
   }
 
   container {
